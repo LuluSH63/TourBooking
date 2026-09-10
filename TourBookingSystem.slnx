@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="TourBooking.AuditConsumer/TourBooking.AuditConsumer.csproj" />
+  <Project Path="TourBooking.BookingConsumer/TourBooking.BookingConsumer.csproj" />
+  <Project Path="TourBooking.CancellationConsumer/TourBooking.CancellationConsumer.csproj" />
+  <Project Path="TourBooking.WebApp/TourBooking.WebApp.csproj" />
+</Solution>

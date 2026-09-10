@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "NIp0RIz4t9s=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\louis\\OneDrive\\Skrivebord\\Visual Studio Codes\\Softwareudvikling\\TourBooking\\TourBooking.CancellationConsumer\\TourBooking.CancellationConsumer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\louis\\.nuget\\packages\\rabbitmq.client\\7.2.2\\rabbitmq.client.7.2.2.nupkg.sha512",
+    "C:\\Users\\louis\\.nuget\\packages\\system.threading.ratelimiting\\8.0.0\\system.threading.ratelimiting.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

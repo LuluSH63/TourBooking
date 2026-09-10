@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Tour Booking & Cancellation</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select, button { padding: 8px; width: 300px; }
+        button { background-color: #28a745; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Book eller Afbestil Tur</h2>
+    <form id="tourForm">
+        <div class="form-group">
+            <label>Kundenavn:</label>
+            <input type="text" id="customerName" required placeholder="Indtast navn">
+        </div>
+        <div class="form-group">
+            <label>Vælg tur:</label>
+            <select id="tourName">
+                <option value="Kanalrundfart">Kanalrundfart</option>
+                <option value="Vikingemuseum">Vikingemuseum</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Handling:</label>
+            <select id="action">
+                <option value="book">Book</option>
+                <option value="cancel">Afbestil</option>
+            </select>
+        </div>
+        <button type="submit">Send Anmodning</button>
+    </form>
+
+    <p id="status" style="margin-top:20px; font-weight:bold;"></p>
+
+    <script>
+        document.getElementById('tourForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                customerName: document.getElementById('customerName').value,
+                tourName: document.getElementById('tourName').value,
+                action: document.getElementById('action').value
+            };
+
+            const res = await fetch('/api/tours', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await res.json();
+            document.getElementById('status').innerText = `Sendt! Routing Key var: ${result.routingKey}`;
+        });
+    </script>
+</body>
+</html>
