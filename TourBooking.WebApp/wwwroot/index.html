@@ -2,58 +2,64 @@
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <title>Tour Booking & Cancellation</title>
+    <title>Tour Selection</title>
     <style>
-        body { font-family: sans-serif; margin: 40px; }
+        body { font-family: Arial, sans-serif; margin: 40px; max-width: 400px; }
         .form-group { margin-bottom: 15px; }
         label { display: block; font-weight: bold; margin-bottom: 5px; }
-        input, select, button { padding: 8px; width: 300px; }
-        button { background-color: #28a745; color: white; border: none; cursor: pointer; }
+        input[type="text"], input[type="email"], select { width: 100%; padding: 8px; box-sizing: border-box; }
+        .radio-group { margin: 10px 0; }
+        button { background-color: #0066cc; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; }
+        #status { margin-top: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h2>Book eller Afbestil Tur</h2>
+    <h2>Tour Selection</h2>
     <form id="tourForm">
         <div class="form-group">
-            <label>Kundenavn:</label>
-            <input type="text" id="customerName" required placeholder="Indtast navn">
+            <label for="customerName">Name</label>
+            <input type="text" id="customerName" required placeholder="Indtast dit navn">
         </div>
         <div class="form-group">
-            <label>Vælg tur:</label>
+            <label for="email">Email</label>
+            <input type="email" id="email" required placeholder="din@email.dk">
+        </div>
+        <div class="form-group">
+            <label for="tourName">Tours</label>
             <select id="tourName">
-                <option value="Kanalrundfart">Kanalrundfart</option>
-                <option value="Vikingemuseum">Vikingemuseum</option>
+                <option value="København Kanalrundfart">København Kanalrundfart</option>
+                <option value="Vikingemuseum Roskilde">Vikingemuseum Roskilde</option>
+                <option value="Odense H.C. Andersen Tour">Odense H.C. Andersen Tour</option>
             </select>
         </div>
-        <div class="form-group">
-            <label>Handling:</label>
-            <select id="action">
-                <option value="book">Book</option>
-                <option value="cancel">Afbestil</option>
-            </select>
+        <div class="radio-group">
+            <label><input type="radio" name="action" value="book" checked> Book</label>
+            <label><input type="radio" name="action" value="cancel"> Cancel</label>
         </div>
-        <button type="submit">Send Anmodning</button>
+        <button type="submit">Submit</button>
     </form>
 
-    <p id="status" style="margin-top:20px; font-weight:bold;"></p>
+    <div id="status"></div>
 
     <script>
         document.getElementById('tourForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const actionVal = document.querySelector('input[name="action"]:checked').value;
             const data = {
                 customerName: document.getElementById('customerName').value,
+                email: document.getElementById('email').value,
                 tourName: document.getElementById('tourName').value,
-                action: document.getElementById('action').value
+                action: actionVal
             };
 
-            const res = await fetch('/api/tours', {
+            const response = await fetch('/api/tour', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
 
-            const result = await res.json();
-            document.getElementById('status').innerText = `Sendt! Routing Key var: ${result.routingKey}`;
+            const result = await response.json();
+            document.getElementById('status').innerText = `${result.message} (Routing Key: ${result.routingKey})`;
         });
     </script>
 </body>
